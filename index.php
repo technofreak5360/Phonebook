@@ -51,6 +51,7 @@ unset($_SESSION['msg']);
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <form action="savedata.php" method="post">
+          <input type="hidden" name="id"  value="<?php echo $id; ?>">
           <div class="form-group">
     <label for="exampleInputPassword1">Name</label>
     <input type="text" name="name" class="form-control"  value="<?php echo $name; ?>" placeholder="Name">
@@ -63,7 +64,13 @@ unset($_SESSION['msg']);
     <label for="exampleInputphone">Phone Number</label>
     <input type="text" name="mobile" class="form-control"  value="<?php echo $phone; ?>" placeholder="Phone Number">
   </div>
+   <?php 
+   if($update==true):
+   ?>
+   <button type="submit" name="save" class="btn btn-info">Update</button>
+   <?php else :?>
   <button type="submit" name="save" class="btn btn-primary">Save</button>
+   <?php endif; ?>
 </form>
         </div>
       </div>
@@ -91,7 +98,7 @@ while($row = $result->fetch_assoc()):
 <td> <?php echo $row['name'] ?> </td>
 <td> <?php echo $row['email'] ?> </td>
 <td> <?php echo $row['phone'] ?> </td>
-<td> <a href="savedata.php?edit=<?php  echo $row['id']; ?> " class="btn btn-info">Edit</a> 
+<td> <a href="index.php?edit=<?php  echo $row['id']; ?> " class="btn btn-info">Edit</a> 
       <a href="savedata.php?delete=<?php  echo $row['id']; ?> " class="btn btn-danger">Delete</a>
 </td>
 </tr>

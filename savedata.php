@@ -2,11 +2,11 @@
 session_start();
 
 $mysqli = new mysqli('localhost','root','','phone') or die(mysqli_error($mysqli));
-
+$id=0;
 $name = "";
 $email = "";
 $phone = "";
-
+$update = false;
 if(isset($_POST['save']))
 {
     $name = $_POST['name'];
@@ -37,13 +37,14 @@ $id = $_GET['delete'];
 if(isset($_GET['edit']))
 {
 $id = $_GET['edit'];
+$update = true;
  $result = $mysqli->query("SELECT * FROM contacts where id=$id") or die($mysqli->error);
  if($result->num_rows){
     $row = $result->fetch_array();
     $name = $row['name'];
     $email =  $row['email'];
     $phone =  $row['phone'];
-   // header('Location: index.php');
+   // header('Location: update.php');
  }
  
 }
