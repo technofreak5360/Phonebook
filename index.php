@@ -10,8 +10,22 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container-fluid">
+
+<?php 
+if(isset($_SESSION['msg'])):
+?>
+
+<div class="alert alert-<?php=$_SESSION['msg_type'] ?>">
+<?php 
+echo $_SESSION['msg'];
+unset($_SESSION['msg']);
+
+?>
+</div>
+<?php endif ?>
+
+
   <h2>Phonebook</h2>
 
   <?php require_once 'savedata.php';  ?>
@@ -26,7 +40,7 @@
    
    ?>
   <!-- Trigger the modal with a button -->
-  <a data-toggle="modal" data-target="#myModal"><img   height="55px" src="add.jpg" /></a>
+  <a data-toggle="modal" data-target="#myModal"><img src="add.jpg"  height="55px" src="add.jpg" /></a>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -39,15 +53,15 @@
           <form action="savedata.php" method="post">
           <div class="form-group">
     <label for="exampleInputPassword1">Name</label>
-    <input type="text" name="name" class="form-control" placeholder="Name">
+    <input type="text" name="name" class="form-control"  value="<?php echo $name; ?>" placeholder="Name">
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
-    <input type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+    <input type="email" name="email" class="form-control" aria-describedby="emailHelp"  value="<?php echo $email; ?>" placeholder="Enter email">
   </div>
   <div class="form-group">
     <label for="exampleInputphone">Phone Number</label>
-    <input type="text" name="mobile" class="form-control"  placeholder="Phone Number">
+    <input type="text" name="mobile" class="form-control"  value="<?php echo $phone; ?>" placeholder="Phone Number">
   </div>
   <button type="submit" name="save" class="btn btn-primary">Save</button>
 </form>
@@ -63,7 +77,7 @@
 <tr>
 <th>Name</th>
 <th>Email</th>
-<th>Phone/th>
+<th>Phone</th>
 <th colspan="2">action</th>
 </tr>
 </thead>
@@ -77,7 +91,7 @@ while($row = $result->fetch_assoc()):
 <td> <?php echo $row['name'] ?> </td>
 <td> <?php echo $row['email'] ?> </td>
 <td> <?php echo $row['phone'] ?> </td>
-<td> <a href="index.php?edit=<?php  echo $row['id']; ?> " class="btn btn-info">Edit</a> 
+<td> <a href="savedata.php?edit=<?php  echo $row['id']; ?> " class="btn btn-info">Edit</a> 
       <a href="savedata.php?delete=<?php  echo $row['id']; ?> " class="btn btn-danger">Delete</a>
 </td>
 </tr>
