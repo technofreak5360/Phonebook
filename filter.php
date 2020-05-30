@@ -1,6 +1,5 @@
-<?php
-
-function fetchdata()
+<?php 
+function filter()
 {
     $servername = "localhost";
     $username = "root";

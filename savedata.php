@@ -1,7 +1,6 @@
 <?php 
-session_start();
 
-$mysqli = new mysqli('localhost','root','','phone') or die(mysqli_error($mysqli));
+$mysqli = new mysqli('localhost','root','','addressbook') or die(mysqli_error($mysqli));
 $id=0;
 $name = "";
 $email = "";
@@ -17,8 +16,8 @@ if(isset($_POST['save']))
     $mysqli->query("INSERT into contacts(name,email,phone) VALUES('$name','$email','$phone')") or die($mysqli->error);
     
 
-    $_SESSION['msg'] = "Details has been saved :)";
-    $_SESSION['msg_type'] = "success";
+    // $_SESSION['msg'] = "Details has been saved :)";
+    // $_SESSION['msg_type'] = "success";
 
     header('Location: index.php');
 }
@@ -28,8 +27,8 @@ if(isset($_GET['delete']))
 $id = $_GET['delete'];
  $mysqli->query("DELETE FROM contacts where id=$id") or die($mysqli->error);
 
- $_SESSION['msg'] = "user Data has been deleted";
- $_SESSION['msg_type'] = "danger";
+//  $_SESSION['msg'] = "user Data has been deleted";
+//  $_SESSION['msg_type'] = "danger";
 
  header('Location: index.php');
 }
@@ -48,5 +47,20 @@ $update = true;
  }
  
 }
+if(isset($_POST['update']))
+{   
+    $id= $_POST['id'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['mobile'];
 
+
+    $mysqli->query("UPDATE contacts SET name='$name',email='$email', phone='$phone'") or die($mysqli->error());
+    
+
+    // $_SESSION['msg'] = "Details has been saved :)";
+    // $_SESSION['msg_type'] = "success";
+
+    header('Location: index.php');
+}
 ?>
