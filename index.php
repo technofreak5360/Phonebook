@@ -2,6 +2,11 @@
 
 <head>
     <title>Phonebook</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="jquery-ui.css">
     <link rel="stylesheet" href="bootstrap.min.css" />
     <script src="jquery.min.js"></script>
@@ -12,10 +17,65 @@
     <div class="container">
         <br />
 
-        <h3 align="center">PHONEBOOK</h3><br />
+        <h2 class="text-primary text-center">PHONEBOOK</h2>
         <br />
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-info btn-m" data-toggle="modal" data-target="#myModal2">search
+            User</button>
+
+        <!-- Modal -->
+        <div id="myModal2" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Search User</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="topnav">
+                            <div class="search-container">
+                                <form action="" method="GET">
+                                    <div class="col-md-6">
+                                        <input type="text" name="search" class='form-control' id="search"
+                                            placeholder="Search By Name" autocomplete="off">
+                                    </div>
+                                </form>
+                            </div><br><br><br>
+                            <table class="table table-bordered" id="table-data">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                    </tr>
+                                </thead>
+                                <?php 
+require 'filter.php';
+$data = filter();
+while($row = $data->fetch_assoc()):
+
+?>
+                                <tr>
+                                    <td> <?=$row['name'] ?> </td>
+                                    <td> <?=$row['email'] ?> </td>
+                                    <td> <?=$row['phone'] ?> </td>
+                                </tr>
+                                <?Php endwhile; ?>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <div align="right" style="margin-bottom:5px;">
-            <button type="button" name="add" id="add" class="btn btn-success btn-m">Add</button>
+            <img style="cursor:pointer" name="add" id="add" width="80em" src="add-remove.png" />
         </div>
         <div class="table-responsive" id="user_data">
 
@@ -207,5 +267,26 @@ $(document).ready(function() {
         $('#delete_confirmation').data('id', id).dialog('open');
     });
 
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#search").keyup(function() {
+        var search = $(this).val();
+
+        $.ajax({
+
+            url: 'filterop.php',
+            method: 'post',
+            data: {
+                query: search
+            },
+            success: function(response) {
+                $("#table-data").html(response);
+            }
+
+        });
+
+    });
 });
 </script>

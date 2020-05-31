@@ -42,6 +42,7 @@ if(isset($_POST["action"]))
 		$statement = $connect->prepare($query);
 		$statement->execute();
 		echo '<p>Data Updated</p>';
+		
 	}
 	if($_POST["action"] == "delete")
 	{
@@ -49,7 +50,9 @@ if(isset($_POST["action"]))
 		$statement = $connect->prepare($query);
 		$statement->execute();
 		echo '<p>Data Deleted</p>';
+		
 	}
+	
 }
 
 ?>
